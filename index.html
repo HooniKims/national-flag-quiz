@@ -80,7 +80,7 @@ button{font:inherit;color:inherit}
 .hero-flags img{width:52px;height:36px;object-fit:cover;border-radius:6px;box-shadow:0 2px 0 var(--line);animation:bob 2.6s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-6px) rotate(-3deg)}}
 
-.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0 22px}
 .mode{
   text-align:left;border:2px solid var(--line);background:var(--surface);border-radius:20px;padding:16px;
   cursor:pointer;box-shadow:0 6px 0 var(--line);transition:transform .1s, box-shadow .1s, border-color .15s;position:relative;
@@ -118,14 +118,15 @@ button{font:inherit;color:inherit}
 .progress{height:10px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin-bottom:16px;border:2px solid var(--line)}
 .progress > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--accent));border-radius:99px;transition:width .4s}
 
-.stage{position:relative;max-width:min(100%, calc((100vh - 330px) * 1.5), 620px);margin:0 auto}
+.stage{position:relative;max-width:min(100%, calc((100vh - 420px) * 1.5), 620px);min-width:min(100%, 300px);margin:0 auto}
 @media (max-height:640px){.stage{max-width:100%}}
 .flag-frame{
   position:relative;width:100%;aspect-ratio:3/2;border-radius:22px;overflow:hidden;background:var(--frame);
   border:3px solid var(--line);box-shadow:0 8px 0 var(--line);
 }
+.flag-frame{touch-action:manipulation;-webkit-user-select:none;user-select:none}
 .flag-frame img{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+  position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;-webkit-touch-callout:none;
   transition:transform .7s cubic-bezier(.2,.8,.2,1), opacity .2s;user-select:none;-webkit-user-drag:none;
 }
 .flag-frame.shake{animation:shake .45s}
@@ -163,14 +164,37 @@ button{font:inherit;color:inherit}
 .conq-foot{display:flex;justify-content:space-between;gap:10px;margin-top:6px;font-size:12.5px;color:var(--muted)}
 .link-btn{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:12.5px;white-space:nowrap}
 .conq-badge{position:absolute;top:2px;right:4px;font-size:16px}
-.hint-bar{display:flex;align-items:center;gap:12px;margin:14px 0 12px;flex-wrap:wrap}
-.ladder{display:flex;gap:5px;flex:1;min-width:140px}
+.hint-bar{display:flex;align-items:center;gap:10px;margin:14px 0 8px}
+.hint-bar #hintBtn{flex:1}
+.hint-bar #passBtn{flex:none}
+.ladder-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.hint-count{font-size:13px;font-weight:800;color:var(--muted);white-space:nowrap}
+.ladder{display:flex;gap:5px;flex:1}
 .ladder i{flex:1;height:10px;border-radius:99px;background:var(--surface-2);border:2px solid var(--line);transition:background .3s}
 .ladder i.on{background:var(--gold);border-color:var(--gold)}
 .worth{font-weight:700;font-size:15px;white-space:nowrap}
 .worth b{color:var(--accent);font-size:19px}
 
-.clues{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;min-height:0}
+.clues{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+.clues:empty{display:none}
+#answerArea{margin-top:12px}
+.answer-type input.locked{background:var(--surface-2);color:var(--muted);caret-color:transparent}
+.answer-type input.ok{border-color:var(--good)}
+.answer-type input.no{border-color:var(--bad)}
+.flag-label{
+  position:absolute;left:50%;bottom:12px;transform:translateX(-50%);max-width:92%;text-align:center;
+  padding:8px 18px;border-radius:99px;font-family:"Jua",sans-serif;font-size:clamp(17px,5.4vw,28px);line-height:1.2;
+  color:#fff;background:rgba(22,163,74,.94);box-shadow:0 4px 16px rgba(0,0,0,.28);animation:labelIn .4s cubic-bezier(.3,1.5,.5,1)
+}
+.flag-label.no{background:rgba(220,38,38,.94)}
+.flag-label small{font-size:.62em;opacity:.95;margin-left:6px}
+@keyframes labelIn{from{opacity:0;transform:translate(-50%,12px) scale(.8)}}
+.now-set{margin:18px auto 0;text-align:center;font-size:14px;color:var(--muted);font-weight:700}
+.now-set a{color:var(--teal);margin-left:6px;white-space:nowrap}
+.mode .go{display:inline-block;font-size:13px;color:var(--accent);margin-left:6px;vertical-align:2px}
+.rules{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;font-size:14px}
+.rules summary{cursor:pointer;font-weight:800;list-style-position:inside}
+.rules ul{margin:8px 0 0;padding-left:18px;line-height:1.7;color:var(--ink)}
 .clue{background:var(--teal-bg);color:var(--ink);border:2px solid var(--teal);border-radius:12px;padding:6px 12px;font-weight:700;font-size:15px;animation:pop .35s}
 .clue .dots{letter-spacing:4px;font-size:17px}
 
@@ -181,7 +205,8 @@ button{font:inherit;color:inherit}
 }
 .answer-type input:focus{border-color:var(--teal)}
 .answer-type input.shake{animation:shake .45s;border-color:var(--bad)}
-.feedback{min-height:24px;margin:10px 2px 0;font-weight:700;font-size:15px}
+.feedback{margin:8px 2px 0;font-weight:700;font-size:15px}
+.feedback:empty{display:none}
 .feedback.bad{color:var(--bad)}
 .feedback.near{color:var(--gold)}
 .feedback.bad, .feedback.near{animation:pop .3s}
@@ -244,12 +269,19 @@ button{font:inherit;color:inherit}
 canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
 @media (hover:none){.kbd-help{display:none}}
 
+/* ---------- 휴대폰 키보드가 열렸을 때: 국기와 입력칸이 한 화면에 보이도록 ---------- */
+body.kb-open .topbar, body.kb-open .progress, body.kb-open .kbd-help{display:none}
+body.kb-open .wrap{padding-top:6px}
+body.kb-open .hud{margin-bottom:6px}
+body.kb-open .hud .pill{padding:3px 8px;font-size:12px}
+body.kb-open .stage{max-width:min(100%, calc((var(--vvh, 100vh) - 190px) * 1.5))}
+body.kb-open .speed-row{margin-top:8px}
+body.kb-open .clues{margin-top:6px}
+body.kb-open .clue{font-size:13px;padding:3px 8px}
+body.kb-open #answerArea{margin-top:8px}
+
 /* ---------- 모바일 ---------- */
 @media (max-width:520px){
-  /* 휴대폰: 설정을 먼저 보고 모드를 고르도록 순서 바꾸기 */
-  #home:not([hidden]){display:flex;flex-direction:column}
-  #home .panel{order:1;margin-top:14px}
-  #home .modes{order:2}
   .wrap{padding-top:10px;padding-left:max(12px, env(safe-area-inset-left));padding-right:max(12px, env(safe-area-inset-right))}
   .topbar{margin-bottom:8px}
   .topbar .logo{font-size:18px}
@@ -277,9 +309,8 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
   .zoom-badge,.retry-badge{font-size:11.5px;padding:4px 8px;top:8px}
   .zoom-badge{left:8px}.retry-badge{right:8px}
   .speed-row{margin-top:14px;gap:8px}
-  .hint-bar{margin:10px 0 8px;gap:8px}
-  .hint-bar .btn{flex:1 1 100%}
-  .ladder{flex-basis:100%}
+  .hint-bar{margin:10px 0 6px;gap:8px}
+  .now-set{margin-top:10px;font-size:13px}
   .clues{gap:6px;margin-bottom:8px}
   .clue{font-size:14px;padding:5px 10px}
   .answer-type{gap:8px}
@@ -287,7 +318,6 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
   .answer-type .btn{padding:12px 16px}
   .choices{gap:8px}
   .choice{font-size:16px;padding:12px 10px;gap:8px}
-  .actions{margin-top:10px}
   .reveal{padding:14px;gap:12px;margin-top:12px}
   .reveal .big{font-size:26px}
   .reveal .btn{width:100%}
@@ -324,16 +354,17 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
       <p>국기 조각만 보고 맞혀 보세요. 어려우면 힌트! 국기가 조금씩 더 보여요.</p>
     </div>
 
+    <div class="now-set" id="nowSet"></div>
     <div class="modes">
       <button class="mode featured" type="button" data-mode="part">
         <span class="tag">추천</span>
         <div class="emoji">🧩</div>
-        <h3>조각 맞히기</h3>
+        <h3>조각 맞히기 <span class="go">시작 ▶</span></h3>
         <p>국기의 일부분만 보고 맞혀요. 힌트를 누를 때마다 국기가 단계별로 더 보여요.</p>
       </button>
       <button class="mode" type="button" data-mode="full">
         <div class="emoji">🏳️</div>
-        <h3>국기 맞히기</h3>
+        <h3>국기 맞히기 <span class="go">시작 ▶</span></h3>
         <p>국기 전체를 보고 나라 이름을 맞혀요. 힌트로 대륙과 글자 수를 볼 수 있어요.</p>
       </button>
       <button class="mode" type="button" data-mode="dex">
@@ -343,7 +374,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
       </button>
     </div>
 
-    <div class="panel">
+    <div class="panel" id="settings">
       <h2>⚙️ 퀴즈 설정</h2>
       <div class="set-row">
         <span class="lbl">답하는 방법</span>
@@ -380,6 +411,16 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
         <div class="conq-bar"><i id="conqBar"></i></div>
         <div class="conq-foot"><span>한 번이라도 맞힌 국기는 정복으로 기록돼요.</span><button class="link-btn" id="resetConq" type="button">기록 지우기</button></div>
       </div>
+      <details class="rules">
+        <summary>📏 점수는 이렇게 매겨져요</summary>
+        <ul>
+          <li><b>⚡ 속도</b> 국기가 나오고 <b id="ruleFast">4초</b> 안에 맞히면 100점, 그 뒤로 1초마다 4점씩 줄어요. (최소 10점)</li>
+          <li><b>💡 힌트</b> 하나 쓸 때마다 10%씩 줄어요. (최소 40%)</li>
+          <li><b>🔥 콤보</b> 연속으로 맞히면 +10, +20 … 최대 +50점을 더 받아요.</li>
+          <li><b>🔁 다시 나온 국기</b> 틀린 국기는 4문제 뒤에 다시 나오고, 점수는 절반이에요.</li>
+          <li>직접 쓰기는 글자를 치는 시간이 있어서 4초, 보기 고르기는 2초까지 만점이에요.</li>
+        </ul>
+      </details>
     </div>
   </section>
 
@@ -397,7 +438,8 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
       <div class="flag-frame" id="frame">
         <img id="flag" alt="퀴즈 국기" draggable="false">
         <span class="zoom-badge" id="zoomBadge">🔍 국기의 일부분</span>
-        <span class="retry-badge" id="retryBadge" hidden>🔁 다시 나온 국기</span>
+        <span class="retry-badge" id="retryBadge" hidden>🔁 다시 나온 국기 · 점수 ½</span>
+        <div class="flag-label" id="flagLabel" hidden></div>
       </div>
     </div>
 
@@ -407,25 +449,27 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
       <span class="worth">⚡ <b id="worth">100</b>점</span>
     </div>
 
-    <div class="hint-bar">
-      <button class="btn hint small" id="hintBtn" type="button">💡 힌트</button>
-      <div class="ladder" id="ladder" aria-hidden="true"></div>
-    </div>
     <div class="clues" id="clues"></div>
 
     <div id="answerArea">
-      <div class="answer-type" id="typeBox">
-        <input id="guess" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="나라 이름을 써 보세요" aria-label="나라 이름 입력">
-        <button class="btn primary" id="submitBtn" type="button">확인</button>
-      </div>
+      <form class="answer-type" id="typeBox" autocomplete="off" novalidate>
+        <input id="guess" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="나라 이름을 써 보세요" aria-label="나라 이름 입력">
+        <button class="btn primary" id="submitBtn" type="submit">확인</button>
+      </form>
       <div class="choices" id="choiceBox"></div>
       <div class="feedback" id="feedback" aria-live="polite"></div>
-      <div class="actions">
-        <button class="btn small" id="passBtn" type="button">🤷 모르겠어요</button>
-      </div>
     </div>
 
-    <div id="revealArea"></div>
+    <div class="hint-bar">
+      <button class="btn hint small" id="hintBtn" type="button">💡 힌트</button>
+      <button class="btn small" id="passBtn" type="button">🤷 모르겠어요</button>
+    </div>
+    <div class="ladder-row" aria-hidden="true">
+      <div class="ladder" id="ladder"></div>
+      <span class="hint-count" id="hintCount">힌트 0/0</span>
+    </div>
+
+    <div id="revealArea" aria-live="polite"></div>
     <div class="kbd-help" id="kbdHelp"></div>
   </section>
 
@@ -740,6 +784,10 @@ function renderSettings(){
   else goal = `<b>${n}개</b>를 모두 맞히면 끝!`;
   $('#poolInfo').innerHTML = (base.length ? `${parts.join(' + ')}${parts.length>1 ? ` = <b>${base.length}개</b>` : '개'}<br>` : '')
     + goal + (n ? ' 틀린 국기는 조금 뒤에 다시 나와요.' : '');
+  const countLabel = settings.count === -1 ? '못 맞힌 국기만' : settings.count > 0 ? `${settings.count}문제` : '전부';
+  $('#nowSet').innerHTML = `지금 설정: ${settings.method==='type' ? '⌨️ 직접 쓰기' : '🔘 보기 고르기'} · ${LEVELS[settings.level]} · ${countLabel} (${n}개)`
+    + `<a href="#settings" id="toSettings">설정 바꾸기 ↓</a>`;
+  $('#ruleFast').textContent = settings.method==='type' ? '4초' : '2초';
   const got = base.filter(c => conquered.has(c.code)).length;
   $('#conqText').textContent = `${got} / ${base.length}`;
   $('#conqBar').style.width = base.length ? `${got/base.length*100}%` : '0';
@@ -763,7 +811,39 @@ function show(id){
   ['home','game','result','dex'].forEach(s => $('#'+s).hidden = s!==id);
   window.scrollTo({top:0,behavior:'smooth'});
 }
-$('#goHome').onclick = () => { show('home'); renderSettings(); };
+$('#goHome').onclick = () => {
+  if(!$('#game').hidden && (G.idx > 0 || G.phase==='done') && !confirm('퀴즈를 그만두고 처음 화면으로 갈까요?\n지금까지 맞힌 국기는 정복 기록에 남아요.')) return;
+  show('home'); renderSettings();
+};
+document.addEventListener('click', e => {
+  if(e.target.id!=='toSettings') return;
+  e.preventDefault(); $('#settings').scrollIntoView({behavior:'smooth', block:'start'});
+});
+let hiddenAt = 0;
+document.addEventListener('visibilitychange', () => {
+  if(document.hidden){ hiddenAt = performance.now(); return; }
+  if(hiddenAt && G.t0 && G.phase==='ask') G.t0 += performance.now() - hiddenAt;
+  hiddenAt = 0;
+});
+
+/* 휴대폰 키보드 감지: 열리면 국기를 줄여 입력칸과 한 화면에 */
+(function(){
+  const vv = window.visualViewport; if(!vv) return;
+  let fullH = vv.height, lastW = vv.width;
+  const update = () => {
+    if(vv.width !== lastW){ lastW = vv.width; fullH = vv.height; }   // 화면 회전
+    fullH = Math.max(fullH, vv.height);
+    const open = vv.height < fullH * 0.78 && !$('#game').hidden && document.activeElement===$('#guess');
+    document.documentElement.style.setProperty('--vvh', vv.height + 'px');
+    if(open !== document.body.classList.contains('kb-open')){
+      document.body.classList.toggle('kb-open', open);
+      if(open) requestAnimationFrame(() => window.scrollTo(0, 0));
+    }
+  };
+  vv.addEventListener('resize', update);
+  addEventListener('focusin', () => setTimeout(update, 300));
+  addEventListener('focusout', () => setTimeout(update, 300));
+})();
 $('#toHome').onclick = () => { show('home'); renderSettings(); };
 $('#resetConq').onclick = () => {
   if(!confirm('정복 기록과 최고 점수를 모두 지울까요?')) return;
@@ -798,13 +878,15 @@ function hintSteps(){
 }
 
 /* ----- 점수: 빨리 맞힐수록 높아요 -----
-   속도 점수  2초 안에 맞히면 100점, 그 뒤로 1초마다 4점씩 줄어 최소 10점
+   속도 점수  만점 시간(직접 쓰기 4초, 보기 고르기 2초) 안에 맞히면 100점,
+              그 뒤로 1초마다 4점씩 줄어 최소 10점
    힌트       하나 쓸 때마다 10%씩 줄어듦 (최소 40%)
    다시 나온 국기는 절반
    콤보       2연속부터 +10, 3연속 +20 … 최대 +50 */
-const FAST = 2, DROP = 4;
+const DROP = 4;
+const fast = () => G.method==='type' ? 4 : 2;
 const elapsed = () => G.t0 ? (performance.now() - G.t0) / 1000 : 0;
-const speedPts = t => t <= FAST ? 100 : Math.max(10, Math.round(100 - (t - FAST) * DROP));
+const speedPts = t => t <= fast() ? 100 : Math.max(10, Math.round(100 - (t - fast()) * DROP));
 const hintMult = () => Math.max(.4, 1 - .1 * G.hint);
 const retryMult = () => G.item && G.item.retry ? .5 : 1;
 const worthNow = () => Math.max(5, Math.round(speedPts(elapsed()) * hintMult() * retryMult()));
@@ -861,12 +943,14 @@ function loadQuestion(){
   $('#feedback').textContent = ''; $('#feedback').className = 'feedback';
   $('#revealArea').innerHTML = '';
   $('#answerArea').hidden = false;
-  $('#passBtn').closest('.actions').hidden = false;
+  $('#passBtn').hidden = false;
+  $('#flagLabel').hidden = true;
   updateHintUI();
 
   if(G.method==='type'){
-    const inp = $('#guess'); inp.value = ''; inp.disabled = false;
-    setTimeout(() => inp.focus({preventScroll:true}), 50);
+    const inp = $('#guess'); inp.value = ''; inp.classList.remove('locked','ok','no','shake'); inp.disabled = false;
+    $('#submitBtn').textContent = '확인';
+    inp.focus({preventScroll:true});   // 터치 이벤트 안에서 바로 불러야 휴대폰 키보드가 유지됨
   } else {
     buildChoices(c);
   }
@@ -876,7 +960,7 @@ function loadQuestion(){
 function tick(){
   if(G.phase!=='ask'){ clearInterval(ticker); return; }
   const t = elapsed();
-  const frac = Math.max(0, 1 - Math.max(0, t - FAST) / (90 / DROP));
+  const frac = Math.max(0, 1 - Math.max(0, t - fast()) / (90 / DROP));
   const bar = $('#speedBar');
   bar.style.transform = `scaleX(${frac})`;
   bar.dataset.level = frac > .6 ? 'hi' : frac > .3 ? 'mid' : 'lo';
@@ -911,6 +995,7 @@ function updateHintUI(){
   btn.disabled = !next || G.phase!=='ask';
   btn.textContent = next ? `💡 힌트: ${next.label} (−10%)` : '💡 힌트를 다 썼어요';
   [...$('#ladder').children].forEach((d,i) => d.classList.toggle('on', i < G.hint));
+  $('#hintCount').textContent = `힌트 ${G.hint}/${G.steps.length}`;
   if(G.phase==='ask') $('#worth').textContent = worthNow();
 }
 
@@ -972,7 +1057,20 @@ function submitGuess(){
   inp.select();
 }
 function shakeEl(el){ el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); }
-$('#submitBtn').onclick = submitGuess;
+document.addEventListener('animationend', e => { if(e.animationName==='shake') e.target.classList.remove('shake'); });
+$('#guess').addEventListener('beforeinput', e => {
+  if(G.phase!=='ask' && !/LineBreak|Paragraph/.test(e.inputType)) e.preventDefault();   // Enter(다음 문제)는 막지 않음
+});
+$('#guess').addEventListener('input', e => { if(G.phase!=='ask') e.target.value = G.lockedValue || ''; });
+$('#typeBox').addEventListener('submit', e => {
+  e.preventDefault();
+  if(G.phase==='ask') submitGuess();
+  else if(G.phase==='done' && performance.now() - G.doneAt > 350) next();   // 정답 Enter가 두 번 들어와 바로 넘어가는 것 방지
+});
+// 버튼을 눌러도 입력칸 포커스(휴대폰 키보드)가 사라지지 않게
+['#hintBtn','#passBtn','#submitBtn'].forEach(sel => $(sel).addEventListener('mousedown', e => {
+  if(G.method==='type' && document.activeElement===$('#guess')) e.preventDefault();
+}));
 $('#passBtn').onclick = () => { if(G.phase==='ask') finish(false, true); };
 $('#quitBtn').onclick = () => {
   if(!['ask','done'].includes(G.phase)) return;
@@ -982,7 +1080,7 @@ $('#quitBtn').onclick = () => {
 
 function finish(ok, passed){
   const t = elapsed(), base = worthNow(), sp = speedPts(t);
-  G.phase = 'done'; clearInterval(ticker);
+  G.phase = 'done'; G.doneAt = performance.now(); clearInterval(ticker);
   $('#timer').textContent = `${t.toFixed(1)}초`;
   $('#worth').textContent = ok ? base : 0;
   const c = G.cur, item = G.item;
@@ -993,7 +1091,11 @@ function finish(ok, passed){
     btns.forEach(b => b.disabled = true);
     btns[G.options.indexOf(c)].classList.add('right');
   }
-  $('#guess').disabled = true;
+  // readOnly로 바꾸면 아이폰 키보드가 닫혀서, 입력만 막고 포커스는 유지
+  $('#guess').classList.remove('shake');
+  $('#guess').classList.add('locked', ok ? 'ok' : 'no'); G.lockedValue = $('#guess').value;
+  $('#feedback').textContent = ''; $('#feedback').className = 'feedback';
+  $('#passBtn').hidden = true;
   updateHintUI();
 
   let detail = '', pts = 0;
@@ -1011,8 +1113,6 @@ function finish(ok, passed){
     if(combo) chips.push(`🔥 ${G.streak}연속 +${combo}`);
     if(fresh) chips.push('🏆 새로 정복!');
     detail = `<div class="breakdown">${chips.map(x => `<span>${x}</span>`).join('')}</div>`;
-    const f = document.createElement('div'); f.className='float-pts'; f.textContent = `+${pts}`;
-    $('.stage').appendChild(f); setTimeout(()=>f.remove(), 1200);
     confetti(); chime();
     const pill = $('#streakPill'); pill.classList.remove('pop'); void pill.offsetWidth; pill.classList.add('pop');
   } else {
@@ -1032,8 +1132,12 @@ function finish(ok, passed){
   const praise = ok ? (sp===100 && !G.hint ? '⚡ 번개처럼 빨라요!' : !G.hint ? '🎯 힌트 없이 정답!' : '🎉 정답이에요!')
                     : (passed ? '🤔 정답은 이 나라예요' : '😢 아쉬워요! 정답은');
   const last = G.idx === G.queue.length-1;
-  if(G.method==='type') $('#answerArea').hidden = true;
-  else $('#passBtn').closest('.actions').hidden = true;
+  const nextLabel = last ? '결과 보기 🏁' : '다음 문제 ▶';
+  const lab = $('#flagLabel');
+  lab.className = 'flag-label' + (ok ? '' : ' no');
+  lab.innerHTML = `${ok ? '✅' : '❌'} ${c.name}${ok ? `<small>+${pts}점</small>` : ''}`;
+  lab.hidden = false;
+  if(G.method==='type') $('#submitBtn').textContent = last ? '결과 🏁' : '다음 ▶';
   $('#revealArea').innerHTML = `
     <div class="reveal ${ok?'ok':'no'}">
       <div class="grow">
@@ -1042,11 +1146,16 @@ function finish(ok, passed){
         <span class="cont">🌏 ${CONT[c.cont]}</span>
         ${detail}
       </div>
-      <button class="btn primary" id="nextBtn" type="button">${last ? '결과 보기 🏁' : '다음 문제 ▶'}</button>
+      ${G.method==='choice' ? `<button class="btn primary" id="nextBtn" type="button">${nextLabel}</button>` : ''}
     </div>`;
-  $('#nextBtn').onclick = next;
-  setTimeout(() => $('#nextBtn') && $('#nextBtn').focus({preventScroll:true}), 30);
-  $('#revealArea').scrollIntoView({behavior:'smooth', block:'nearest'});
+  if(G.method==='choice'){
+    $('#nextBtn').onclick = next;
+    setTimeout(() => $('#nextBtn') && $('#nextBtn').focus({preventScroll:true}), 30);
+  } else {
+    $('#guess').focus({preventScroll:true});   // Enter(휴대폰은 키보드의 완료 키)로 다음 문제
+  }
+  // 정답은 국기 위에 바로 보이니, 다음 버튼이 아래에 있는 보기 고르기에서만 스크롤
+  if(G.method==='choice') $('#nextBtn').scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
 function next(){
@@ -1061,8 +1170,8 @@ document.addEventListener('keydown', e => {
   if($('#game').hidden) return;
   if(e.isComposing) return;   // 한글 조합 중에 눌린 Enter는 건너뛰기
   if(e.key==='Enter'){
-    if(G.phase==='done'){ e.preventDefault(); next(); return; }
-    if(G.phase==='ask' && G.method==='type' && document.activeElement===$('#guess')){ e.preventDefault(); submitGuess(); }
+    if(e.target===$('#guess')) return;   // 입력칸의 Enter는 form submit이 처리
+    if(G.phase==='done'){ e.preventDefault(); next(); }
     return;
   }
   if(G.method==='choice' && G.phase==='ask'){
@@ -1106,7 +1215,7 @@ function showResult(){
   // 점수 올라가는 효과
   const el = $('#resScore'), target = G.score, t0 = performance.now();
   (function tick(t){ const p = Math.min(1,(t-t0)/900); el.textContent = Math.round(target*(1-Math.pow(1-p,3))); if(p<1) requestAnimationFrame(tick); })(t0);
-  if(all) setTimeout(()=>{ confetti(140); confetti(140); }, 1200);
+  if(all) setTimeout(()=>{ const at = {x:innerWidth/2, y:innerHeight*.12}; confetti(120, at); confetti(120, at); }, 1200);
 
   $('#retryMiss').hidden = !G.misses.length;
   $('#missWrap').hidden = !G.misses.length;
@@ -1192,10 +1301,10 @@ const cv = $('#fx'), cx = cv.getContext('2d');
 let parts = [], fxRunning = false;
 function sizeFx(){ cv.width = innerWidth*devicePixelRatio; cv.height = innerHeight*devicePixelRatio; cx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); }
 addEventListener('resize', sizeFx); sizeFx();
-function confetti(n=70){
+function confetti(n=70, at){
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const r = $('#frame').getBoundingClientRect();
-  const ox = r.left + r.width/2, oy = r.top + r.height/2;
+  const ox = at ? at.x : r.left + r.width/2, oy = at ? at.y : r.top + r.height/2;
   const colors = ['#FF6B4A','#F5B301','#0E9F9E','#16A34A','#3B82F6','#EC4899'];
   for(let i=0;i<n;i++){
     const a = Math.random()*Math.PI*2, s = 4 + Math.random()*8;
