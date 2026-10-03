@@ -2,7 +2,7 @@
 
 국기의 일부분만 보고 어느 나라인지 맞히는 퀴즈입니다. 어려우면 힌트를 누르세요. 국기가 단계별로 더 보입니다.
 
-**바로 하기 → https://national-flag-quiz.netlify.app**
+**바로 하기 → https://nationalflagquiz.netlify.app**
 
 (GitHub Pages 주소: https://hoonikims.github.io/national-flag-quiz/)
 
